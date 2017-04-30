@@ -1,0 +1,23 @@
+{
+  "presets": [
+    ["es2015", { "modules": false }],
+    "stage-2"
+  ],
+  "plugins": [
+    "syntax-flow",
+    "transform-flow-strip-types",
+    ["transform-runtime", {
+      "polyfill": true,
+      "regenerator": true
+    }]
+  ],
+  "comments": false,
+  "env": {
+    "test": {
+      "presets": [
+        "es2015",
+        "stage-2"
+      ]
+    }
+  }
+}
