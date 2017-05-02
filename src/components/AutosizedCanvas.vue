@@ -1,5 +1,7 @@
 <template>
-    <canvas flexroot ref="canvas" />
+    <div flexroot class="wrap">
+        <canvas class="canvas" flexroot ref="canvas" />
+    </div>
 </template>
 <script>
     export default {
@@ -44,6 +46,8 @@
             },
             _tick (dt, time) {
                 const canvas = this.$refs.canvas
+                if (!canvas) return
+
                 const ctx = this._ctx
                 const {width: w, height: h} = canvas.parentNode.getBoundingClientRect()
                 if (canvas.width !== w || canvas.height !== h) {
@@ -59,3 +63,15 @@
         }
     }
 </script>
+<style media="screen">
+    .wrap {
+        position: relative;
+    }
+    .canvas {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        top: 0;
+        right: 0;
+    }
+</style>

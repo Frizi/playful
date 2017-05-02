@@ -1,14 +1,23 @@
 // @flow weak
 
-import jsmediatags from 'jsmediatags'
+import { Reader } from 'jsmediatags'
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
 const bufSource = audioCtx.createBufferSource();
 
-export const getAudioInfo = audioData  => {
+type AudioTags = {
+    tags: {
+        album: string,
+        artist: string,
+        title: string
+    }
+}
+
+export const getAudioInfo = (audioFile: File) : Promise<AudioTags> => {
     return new Promise((resolve, reject) => {
-        new jsmediatags.Reader("http://www.example.com/music-file.mp3")
-          .setTagsToRead(["title", "artist", "album"])
+        new Reader(audioFile)
+            .setTagsToRead(["title", "artist", "album"])
+            .read({ onSuccess: resolve })
     })
 }
 

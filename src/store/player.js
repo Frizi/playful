@@ -9,7 +9,8 @@ type State = {
     lastSeekTime: number,
     lastSeekPosition: number,
     volume: number,
-    currentSoundId: ?string
+    currentSoundId: ?string,
+    isPlaying: boolean
 }
 
 const state : State = {
@@ -31,12 +32,11 @@ const {getter, action, mutation, dispatch} : Module <State> = createModule(state
 
 import {singleSoundInfoFn as soundsSingleSoundInfoFn} from './sounds'
 
-type PlaylistItem = {
+type PlaylistItem = {|
     id: string,
     label: string,
-    duration:
-        ? number
-}
+    duration: ?number
+|}
 
 export const isPlaying = getter(state => state.isPlaying)
 
@@ -49,16 +49,16 @@ export const currentlyPlayingItem = getter(state => {
 export const playlistItems = getter((state) : PlaylistItem[] => {
     const getSoundInfo = soundsSingleSoundInfoFn()
     return state.playlistIds.map(id => {
-        const info = getSoundInfo(id)
-        if (info.data) {
+        const data = getSoundInfo(id)
+        if (data.info) {
             return {
                 id,
-                label: `${info.artist} - ${info.title}`,
-                duration: info.data.duration || null
+                label: `${data.info.artist} - ${data.info.title}`,
+                duration: data.info.duration
             }
         }
-        if (info.raw) {
-            return {id, label: info.raw.name, duration: null}
+        if (data.raw) {
+            return {id, label: data.raw.name, duration: null}
         }
         return null
     }).filter(Boolean)

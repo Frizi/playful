@@ -1,6 +1,9 @@
 module.exports = {
     entry: 'src/index.js',
     webpack: {
-        devtool: 'eval'
+        devtool: 'eval',
+        node: {
+           fs: "empty"
+        }
     }
 }

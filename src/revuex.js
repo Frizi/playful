@@ -57,7 +57,7 @@ export function createModule<S>(initialState: S, modName: string) : Module<S> {
         }
       }
     })
-    const getFn = (input) => {
+    const getFn = () => {
       return vm.output
     }
 
